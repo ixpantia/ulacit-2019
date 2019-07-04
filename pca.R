@@ -1,5 +1,6 @@
 library(tidyverse)
 library(ggbiplot)
+library(factoextra)
 
 # Carga los datos y quita el id (no es una variable!)
 logs <- read_csv("data/UNSW_NB15_training-set.csv") %>%
@@ -22,10 +23,9 @@ logs.labels <- logs %>%
 logs.pca <- prcomp(logs.features, scale = TRUE)
 
 # Grafica los resultados del PCA (un biplot)
-ggbiplot(logs.pca, obs.scale = 1, var.scale = 1, groups = logs.labels,
-         circle = FALSE)
+fviz_pca_var(logs.pca,
+             col.var = "contrib", # Color by contributions to the PC
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+             repel = TRUE     # Avoid text overlapping
+)
 
-# Haz un zoom-in para ver los vectores de lo features
-ggbiplot(logs.pca, obs.scale = 0.1, var.scale = 4, var.axes = TRUE,
-         scale = TRUE, groups = logs.labels,  circle = FALSE, expand = TRUE,
-         alpha = TRUE) + ylim(-1, 1) + xlim(-2, 2)
