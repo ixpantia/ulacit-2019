@@ -1,6 +1,8 @@
 #### Random Forest
-library(tidyverse)
+library(dplyr)
 library(ranger)
+library(readr)
+library(ggplot2)
 
 # Carga los datos y quita el id
 logs <- read_csv("data/UNSW_NB15_training-set.csv") %>%
